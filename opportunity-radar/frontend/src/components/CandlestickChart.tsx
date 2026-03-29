@@ -34,8 +34,8 @@ export default function CandlestickChart({ data, symbol, height = 320 }: ChartPr
         width: chartRef.current!.clientWidth,
         height,
         layout: {
-          background: { type: ColorType.Solid, color: '#0D1F35' },
           textColor: '#4A6B8A',
+          background: { color: '#ffffff' },
         },
         grid: {
           vertLines: { color: '#1A3A5C', style: 1 },
@@ -52,7 +52,7 @@ export default function CandlestickChart({ data, symbol, height = 320 }: ChartPr
         },
         timeScale: {
           borderColor: '#1A3A5C',
-          textColor: '#4A6B8A',
+          // textColor: '#4A6B8A',
           timeVisible: true,
         },
         handleScroll: true,
