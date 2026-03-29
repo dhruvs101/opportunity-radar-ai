@@ -7,6 +7,7 @@ import json
 from typing import TypedDict, Annotated, List, Optional
 from datetime import datetime
 from huggingface_hub import InferenceClient
+from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
 
@@ -16,7 +17,16 @@ from data.mock_data import (
 )
 import random
 
-client = InferenceClient(api_key=os.environ.get("HUGGINGFACEHUB_API_TOKEN"))
+# Load backend/.env so local runs and CMD sessions can use file-based secrets.
+load_dotenv()
+
+hf_token = os.environ.get("HUGGINGFACEHUB_API_TOKEN") or os.environ.get("HF_TOKEN")
+if not hf_token:
+    raise RuntimeError(
+        "Missing Hugging Face token. Set HUGGINGFACEHUB_API_TOKEN (or HF_TOKEN) in backend/.env or your shell."
+    )
+
+client = InferenceClient(api_key=hf_token)
 MODEL = "meta-llama/Llama-3.3-70B-Instruct"
 
 

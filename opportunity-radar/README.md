@@ -31,9 +31,7 @@ Opportunity Radar AI scans NSE stocks and runs a **live multi-agent debate** for
 | Agents | LangGraph state machine (5-node pipeline) |
 | Frontend | Next.js 14, TypeScript, Tailwind CSS |
 | Charts | lightweight-charts (TradingView), Recharts |
-| Real-time | WebSocket (FastAPI + Next.js) |
-| Data | Mock NSE/FII/sentiment (production: NSE API, SEBI scraper) |
-| Delivery | WhatsApp (Twilio), Telegram (python-telegram-bot) stub |
+| Data | Mock NSE/FII/sentiment 
 
 ---
 
@@ -42,14 +40,11 @@ Opportunity Radar AI scans NSE stocks and runs a **live multi-agent debate** for
 ### Prerequisites
 - Python 3.11+
 - Node.js 20+
-- Anthropic API key → [console.anthropic.com](https://console.anthropic.com)
-
 ### 1. Backend
 
 ```bash
 cd backend
 cp .env.example .env
-# Edit .env → add your ANTHROPIC_API_KEY
 bash run.sh
 # Backend running at http://localhost:8000
 ```
@@ -67,25 +62,12 @@ npm run dev
 
 ```bash
 # Create root .env
-echo "ANTHROPIC_API_KEY=your_key_here" > .env
+echo "API_KEY=your_key_here" > .env
 docker-compose up --build
 ```
 
 ---
 
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/` | Health check |
-| GET | `/api/market/overview` | Nifty, Sensex, VIX, FII/DII |
-| GET | `/api/stocks` | All tracked stocks with live prices |
-| GET | `/api/stocks/{symbol}` | Stock detail + OHLCV + FII + sentiment |
-| GET | `/api/signals/live` | Live scanner signals |
-| POST | `/api/analyze` | **Full multi-agent analysis** (calls Claude) |
-| POST | `/api/alerts/send` | Send WhatsApp/Telegram alert |
-| GET | `/api/screener` | Filter signals by sector/type/score |
-| WS | `/ws/signals` | WebSocket live signal feed |
 
 ### Example: Run Full Analysis
 ```bash
@@ -137,26 +119,11 @@ opportunity-radar/
 └── README.md
 ```
 
----
-
-## Production Upgrade Path
-
-| Feature | Mock (Hackathon) | Production |
-|---------|-----------------|------------|
-| Stock data | Generated OHLCV | NSE Python API / yfinance |
-| FII/DII | Mock flows | NSE website scraper |
-| Sentiment | Mock scores | Twitter API v2 / Reddit PRAW |
-| SEBI filings | Mock | BSE/NSE filing parser |
-| Alerts | Logged | Twilio WhatsApp + python-telegram-bot |
-| DB | In-memory | PostgreSQL + Redis |
-
----
-
 ## Environment Variables
 
 **Backend `.env`:**
 ```
-ANTHROPIC_API_KEY=sk-ant-...
+API_KEY=hf-ABC-...
 ENVIRONMENT=development
 PORT=8000
 ```
@@ -166,7 +133,4 @@ PORT=8000
 NEXT_PUBLIC_API_URL=http://localhost:8000
 NEXT_PUBLIC_WS_URL=ws://localhost:8000
 ```
-
 ---
-
-*Built for hackathon · India-first · Powered by Claude Sonnet*

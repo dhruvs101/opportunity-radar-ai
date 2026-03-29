@@ -92,7 +92,7 @@ export default function AnalyzePage() {
 
         <div className="mt-4 flex items-center gap-2 text-[10px] font-mono text-radar-muted justify-center">
           <Clock className="w-3 h-3" />
-          Analysis takes ~15–25 seconds · Powered by Claude Sonnet via Anthropic API
+          Analysis takes ~15–25 seconds
         </div>
       </main>
     </div>
